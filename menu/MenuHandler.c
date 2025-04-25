@@ -79,6 +79,12 @@ void menuProcess(char *input)
                         {
                             New_Data.Int = (uint32_t)((input[i] - 48) + (New_Data.Int * 10));
                         }
+                        if(input[i] == '.')
+                        {
+                            sprintf(Menu_Action.Message, "error wrong value \r\n");
+                            Menu_Action.State = Request_Save_Params;
+                            break;
+                        }
                     }
                     // New_Data.Int = (int)atoi(input);
                     break;

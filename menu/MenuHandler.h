@@ -75,8 +75,10 @@ typedef enum
     MENU_Frequencys,
     MENU_One_Frequency,
     MENU_Three_Frequency,
-    MENU_4,
-    MENU_5,
+    MENU_Three_One_Frequency,
+    MENU_Three_Two_Frequency,
+    MENU_Three_Third_Frequency,
+    MENU_SAFETYTIME,
     MENU_BACK,
 } menu_state;
 
