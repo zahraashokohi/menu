@@ -3,6 +3,23 @@
 const char yseLowerAccept[] = "y";
 const char yseUpperAccept[] = "Y";
 
+typedef struct {
+
+
+}frequency_t;
+typedef struct {
+
+    uint8_t divider : 1;
+}flag_t;
+
+
+typedef struct {
+
+    uint8_t  decimal;
+}cnt_t;
+cnt_t   cnt = {0};
+
+flag_t  flg = {0};
 _Menu_Action Menu_Action;
 _New_Data New_Data;
 unsigned char Old_Data[100];
@@ -47,14 +64,19 @@ submenu_t main_menu[] = {
 };
 
 uint32_t safetyTime = 0;
-submenu_t menu_1[] = {
+submenu_t frequncy_one[] = {
+    {"Enter new frequency param  -> ", NULL, NULL, MENU_MAIN, {"frequency", _float, Change_Params_Cmd}, &frequency},
+};
+submenu_t frequncy_two[] = {
+    {"Enter new frequency param  -> ", NULL, NULL, MENU_MAIN, {"frequency", _float, Change_Params_Cmd}, &frequency},
+};
+submenu_t frequncy_three[] = {
     {"Enter new frequency param  -> ", NULL, NULL, MENU_MAIN, {"frequency", _float, Change_Params_Cmd}, &frequency},
 };
 uint32_t currentMenu = 0;
 menu_t allMenus[] = {
-    {},
-    {"\r\n********* test menu *******\r\n", main_menu, sizeof(main_menu) / sizeof(main_menu[0]), "\r\n end menu \r\n"},
-    {"\r\n********* change frequncy menu*******\r\n", menu_1, sizeof(menu_1) / sizeof(menu_1[0]), ""},
+    MENU_INIT(main_menu, "\r\n********* test menu *******\r\n", "\r\n end menu \r\n"),
+    MENU_INIT(frequncy_one, "\r\n********* change frequncy menu*******\r\n", ""),
 };
 char outputFuc[500];
 char *hasEnterchar;
@@ -116,7 +138,33 @@ void menuProcess(char *input)
                     break;
                 case _float:
                     sprintf(Old_Data, "%f", *((float *)allMenus[Menu_State].menus[i].Data));
-                    New_Data.Float = (float)atof(input);
+                    for (uint32_t i = 0; (input[i] != '\0'); i++)
+                    {
+                        if ((input[i] >= '0') && (input[i] <= '9'))
+                        {
+                            New_Data.Float = (float)((input[i] - 48) + (New_Data.Float * 10));
+                        }
+                        if(flg.divider)
+                        {
+                            cnt.decimal++;
+                        }
+                        if(input[i] == '.')
+                        {
+                            flg.divider = 1;
+                        }
+                    }
+                    if(flg.divider)
+                    {
+                        flg.divider = 0;
+                        uint32_t power = 1;
+                        for(uint8_t index = 0; index < cnt.decimal; index++)
+                        {
+                            power = power* 10;
+                        }
+                        New_Data.Float  = New_Data.Float / power;
+                        printf("power = %d \r\n",power);
+                    }
+
                     break;
                 case _string:
                     strcpy(Old_Data, (char *)allMenus[Menu_State].menus[i].Data);

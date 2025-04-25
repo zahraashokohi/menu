@@ -20,7 +20,7 @@ typedef struct
     char Char;
     uint32_t Int;
     float Float;
-    char *String;
+    const char* String;
 }_New_Data;
 
 typedef enum
@@ -40,7 +40,7 @@ typedef enum
 
 typedef struct
 {
-    char *title;
+    const char* title;
     Data_Types data_type;
     _Cmd_Type cmd_type;
 
@@ -49,7 +49,7 @@ typedef struct
 typedef struct
 {
 
-    char                stringData[500];
+    const char*          stringData;
     void                (*function)(char *input, char *message);
     char*                stringIndex;
     uint8_t             nextMenu;
@@ -60,11 +60,14 @@ typedef struct
 typedef struct
 {
 
-    char menutitle[300];
+    const char* menutitle;
     submenu_t *menus;
     uint8_t sizeMenu;
-    char footerMenu[200];
+    const char* footerMenu;
 } menu_t;
+
+#define MENU_INIT(M, T, F)                              { .menus = M, .sizeMenu = sizeof(M) / sizeof(M[0]), .menutitle = T, .footerMenu = F  }
+
 typedef enum
 {
     MENU_NONE,
