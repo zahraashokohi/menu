@@ -72,9 +72,9 @@ typedef enum
 {
     MENU_NONE,
     MENU_MAIN,
-    MENU_1,
-    MENU_2,
-    MENU_3,
+    MENU_Frequencys,
+    MENU_One_Frequency,
+    MENU_Three_Frequency,
     MENU_4,
     MENU_5,
     MENU_BACK,
@@ -95,13 +95,13 @@ typedef enum
 typedef struct
 {
     Menu_Actions State;
-    char Message[500];
+    char Message[1000];
 } _Menu_Action;
 
 extern _Menu_Action Menu_Action;
+extern menu_t allMenus[];
 
-
-
+void func (void);
 
 #ifdef __cplusplus
 };

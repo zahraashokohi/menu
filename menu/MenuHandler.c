@@ -1,12 +1,8 @@
 #include "MenuHandler.h"
-#define   null_    0
+
 const char yseLowerAccept[] = "y";
 const char yseUpperAccept[] = "Y";
 
-typedef struct {
-
-
-}frequency_t;
 typedef struct {
 
     uint8_t divider : 1;
@@ -20,64 +16,13 @@ typedef struct {
 cnt_t   cnt = {0};
 
 flag_t  flg = {0};
+
+
 _Menu_Action Menu_Action;
 _New_Data New_Data;
 unsigned char Old_Data[100];
 uint32_t Menu_State = MENU_MAIN;
-void show_1(char *input, char *message)
-{
-    strcpy(message, "show one function \r\n");
-}
-void show_2(char *input, char *message)
-{
-    strcpy(message, "change Frequency\r\n");
-}
-void show_3(char *input, char *message)
-{
-    strcpy(message, "show three function \r\n");
-}
-void show_4(char *input, char *message)
-{
-    strcpy(message, "show four function \r\n");
-}
-void show_5(char *input, char *message)
-{
-    strcpy(message, "show five function \r\n");
-}
-void mainmenu1(char *input, char *message)
-{
-    float newPram = 0;
-    printf("mainmenu1 \r\n");
-    for (uint8_t index = 0; input[index] != '\r'; index++)
-    {
-        newPram = (input[index] - 0x30) + newPram * 10;
-    }
-    sprintf(message, "Do you want to change from last to new %f\r\n", newPram);
-}
-float frequency = 0;
-submenu_t main_menu[] = {
-    {"1-> show 1", show_1, "1\r\n", MENU_MAIN, NULL, 0},
-    {"2-> show 2", show_2, "2\r\n", MENU_1, NULL, null_},
-    {"3-> show 3", NULL, "3\r\n", MENU_MAIN, {"frequency = ", _float, Report_Params_Cmd}, &frequency},
-    {"4-> show 4", show_4, "4\r\n", MENU_MAIN, NULL, null_},
-    {"5-> show 5", show_5, "5\r\n", MENU_MAIN, NULL, null_},
-};
 
-uint32_t safetyTime = 0;
-submenu_t frequncy_one[] = {
-    {"Enter new frequency param  -> ", NULL, NULL, MENU_MAIN, {"frequency", _float, Change_Params_Cmd}, &frequency},
-};
-submenu_t frequncy_two[] = {
-    {"Enter new frequency param  -> ", NULL, NULL, MENU_MAIN, {"frequency", _float, Change_Params_Cmd}, &frequency},
-};
-submenu_t frequncy_three[] = {
-    {"Enter new frequency param  -> ", NULL, NULL, MENU_MAIN, {"frequency", _float, Change_Params_Cmd}, &frequency},
-};
-uint32_t currentMenu = 0;
-menu_t allMenus[] = {
-    MENU_INIT(main_menu, "\r\n********* test menu *******\r\n", "\r\n end menu \r\n"),
-    MENU_INIT(frequncy_one, "\r\n********* change frequncy menu*******\r\n", ""),
-};
 char outputFuc[500];
 char *hasEnterchar;
 void menuProcess(char *input)
@@ -119,6 +64,7 @@ void menuProcess(char *input)
         {
             if (allMenus[Menu_State].menus[i].Data_Type.cmd_type == Change_Params_Cmd)
             {
+                printf("Change_Params_Cmd");
                 switch (allMenus[Menu_State].menus[i].Data_Type.data_type)
                 {
                 case _char:
@@ -270,6 +216,7 @@ void menuProcess(char *input)
             }
         }
     }
+    printf("Menu_Action.State = %d , Menu_State = %d \r\n", Menu_Action.State,Menu_State );
 }
 char display[500];
 void Show_Menu_Process(void)
