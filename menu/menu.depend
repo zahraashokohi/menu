@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1745482871 source:c:\users\zahra\desktop\work\menuhandler\menu\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdint.h>
+	<conio.h>
+	<unistd.h>
+	"MenuHandler.h"
+
+1745560529 source:c:\users\zahra\desktop\work\menuhandler\menu\menuhandler.c
+	"MenuHandler.h"
+
+1745559216 c:\users\zahra\desktop\work\menuhandler\menu\menuhandler.h
+	<stdint.h>
+	<stdio.h>
+	<stdlib.h>
+	<stdint.h>
+	<conio.h>
+
